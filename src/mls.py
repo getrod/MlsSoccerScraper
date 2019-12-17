@@ -56,10 +56,54 @@ teamName = teams[0][0]
 teamHtml = requests.get(teams[0][1]).text
 soup = BeautifulSoup(teamHtml, "html.parser")
 
+
 #For that team html document, find the href attribute for the first player
 #TODO: for each "tr in tbody" when refactoring to all team players
 mlsUrl = "https://www.mlssoccer.com"
 teamTable = soup.find("tbody")
+
+#Collect an array of player url (exclude non-roster players)
+playerUrlList = []
+for tr in teamTable.find_all("tr"):
+    if tr.find("a") == None:
+        break
+    playerUrl = mlsUrl + tr.find("a").get("href")
+    playerUrlList.append(playerUrl)
+
+#Query player info per player link and add it to players list
+#TODO: do this for two players
+players = []
+for url in playerUrlList:
+    #Get the player's html page
+    playerHtml = requests.get(url).text
+    soup = BeautifulSoup(playerHtml, "html.parser")
+
+    #Find div containing player info
+    playerContainer = soup.find("div", "player_container")
+
+    #Find the Photo, Name, D.O.B, Club Name, and Position
+    photoUrl = playerContainer.find("img", "headshot_image")["src"]
+    name = playerContainer.find("img", "headshot_image")["alt"]
+    ageContainer = playerContainer.find("div", "age").text
+    birthday = ageContainer.split("\n")[1].split(" ")[1]
+    birthMonth = birthday[birthday.find("(") + 1 : birthday.find(")")].split("/")[0]
+    position = playerContainer.find("span", "position").text
+
+    #Store the player information in a hashmap
+    player = {
+        "Photo": str(photoUrl),
+        "Name": str(name),
+        "DOB": str(birthday),
+        "Club": str(teamName),
+        "Position": str(position)
+    }
+
+    print(player)
+
+    players.append(player)
+
+
+"""
 playerUrl = mlsUrl + teamTable.tr.td.a.get("href")
 playerHtml = requests.get(playerUrl).text
 soup = BeautifulSoup(playerHtml, "html.parser")
@@ -85,3 +129,4 @@ player = {
 }
 
 print(player)
+"""
