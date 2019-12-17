@@ -50,12 +50,14 @@ teams = [
     ["Vancouver Whitecaps FC", "https://www.mlssoccer.com/rosters/2019/vancouver-whitecaps"],
 ]
 
+outputText = ""
+
 #TODO: Refactor this seciton to loop through all team links 
 #Get the html document of one team page url (teams[0][1]). And print it to the console.
 teamName = teams[0][0]
 teamHtml = requests.get(teams[0][1]).text
 soup = BeautifulSoup(teamHtml, "html.parser")
-
+print("Getting " + teamName + " players...")
 
 #For that team html document, find the href attribute for the first player
 #TODO: for each "tr in tbody" when refactoring to all team players
@@ -70,8 +72,7 @@ for tr in teamTable.find_all("tr"):
     playerUrl = mlsUrl + tr.find("a").get("href")
     playerUrlList.append(playerUrl)
 
-#Query player info per player link and add it to players list
-#TODO: do this for two players
+#Query player info per player link (active roster only) and add it to players list
 players = []
 for url in playerUrlList:
     #Get the player's html page
@@ -81,6 +82,10 @@ for url in playerUrlList:
     #Find div containing player info
     playerContainer = soup.find("div", "player_container")
 
+    #If the playerContainer is not present, skip this player link
+    if playerContainer == None:
+        continue
+
     #Find the Photo, Name, D.O.B, Club Name, and Position
     photoUrl = playerContainer.find("img", "headshot_image")["src"]
     name = playerContainer.find("img", "headshot_image")["alt"]
@@ -88,6 +93,10 @@ for url in playerUrlList:
     birthday = ageContainer.split("\n")[1].split(" ")[1]
     birthMonth = birthday[birthday.find("(") + 1 : birthday.find(")")].split("/")[0]
     position = playerContainer.find("span", "position").text
+
+    #If DOB not query dob, continue
+    if (int(birthMonth)) != queryMonth:
+        continue
 
     #Store the player information in a hashmap
     player = {
@@ -98,35 +107,18 @@ for url in playerUrlList:
         "Position": str(position)
     }
 
-    print(player)
-
     players.append(player)
 
+outputText += "---------------------\n" + teamName + "\n\n"
+for player in players:
+    outputText += "Photo: " + player["Photo"] + "\n" + \
+    "Name: " +  player["Name"] + "\n" + \
+    "D.O.B: " + player["DOB"] + "\n" + \
+    "Club: " + player["Club"] + "\n" + \
+    "Position: " + player["Position"] + "\n\n"
 
-"""
-playerUrl = mlsUrl + teamTable.tr.td.a.get("href")
-playerHtml = requests.get(playerUrl).text
-soup = BeautifulSoup(playerHtml, "html.parser")
+print("Done\n\n")
+print(outputText)
 
-#Find div containing player info
-playerContainer = soup.find("div", "player_container")
 
-#Find the Photo, Name, D.O.B, Club Name, and Position
-photoUrl = playerContainer.div.div.img["src"]
-name = playerContainer.div.div.img["alt"]
-ageContainer = playerContainer.find("div", "age").text
-birthday = ageContainer.split("\n")[1].split(" ")[1]
-birthMonth = birthday[birthday.find("(") + 1 : birthday.find(")")].split("/")[0]
-position = playerContainer.find("span", "position").text
 
-#Store the player information in a hashmap
-player = {
-    "Photo": str(photoUrl),
-    "Name": str(name),
-    "DOB": str(birthday),
-    "Club": str(teamName),
-    "Position": str(position)
-}
-
-print(player)
-"""
