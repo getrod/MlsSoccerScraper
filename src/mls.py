@@ -25,6 +25,29 @@ if queryMonth not in range(1,13):
 #Make an array of team names and team urls in the order of the website
 teams = [
     ["Atlanta United FC", "https://www.mlssoccer.com/rosters/2019/atlanta-united"],
+    ["Chicago Fire", "https://www.mlssoccer.com/rosters/2019/chicago-fire"],
+    ["FC Cincinnati", "https://www.mlssoccer.com/rosters/2019/fc-cincinnati"],
+    ["Colorado Rapids", "https://www.mlssoccer.com/rosters/2019/colorado-rapids"],   
+    ["Columbus Crew SC", "https://www.mlssoccer.com/rosters/2019/columbus-crew-sc"],
+    ["FC Dallas", "https://www.mlssoccer.com/rosters/2019/fc-dallas"],
+    ["D.C. United", "https://www.mlssoccer.com/rosters/2019/dc-united"],
+    ["Houston Dynamo", "https://www.mlssoccer.com/rosters/2019/houston-dynamo"],
+    ["Los Angeles Football Club", "https://www.mlssoccer.com/rosters/2019/lafc"],
+    ["LA Galaxy", "https://www.mlssoccer.com/rosters/2019/la-galaxy"],
+    ["Minnesota United FC", "https://www.mlssoccer.com/rosters/2019/minnesota-united"],
+    ["Montreal Impact", "https://www.mlssoccer.com/rosters/2019/montreal-impact"],
+    ["New England Revolution", "https://www.mlssoccer.com/rosters/2019/new-england-revolution"],
+    ["New York City FC", "https://www.mlssoccer.com/rosters/2019/new-york-city-fc"],
+    ["New York Red Bulls", "https://www.mlssoccer.com/rosters/2019/new-york-red-bulls"],
+    ["Orlando City SC", "https://www.mlssoccer.com/rosters/2019/orlando-city"],
+    ["Philadelphia Union", "https://www.mlssoccer.com/rosters/2019/philadelphia-union"],
+    ["Portland Timbers", "https://www.mlssoccer.com/rosters/2019/portland-timbers"],
+    ["Real Salt Lake", "https://www.mlssoccer.com/rosters/2019/real-salt-lake"],
+    ["San Jose Earthquakes", "https://www.mlssoccer.com/rosters/2019/san-jose-earthquakes"],
+    ["Seattle Sounders FC", "https://www.mlssoccer.com/rosters/2019/seattle-sounders"],
+    ["Sporting Kansas City", "https://www.mlssoccer.com/rosters/2019/sporting-kansas-city"],
+    ["Toronto FC", "https://www.mlssoccer.com/rosters/2019/toronto-fc"],
+    ["Vancouver Whitecaps FC", "https://www.mlssoccer.com/rosters/2019/vancouver-whitecaps"],
 ]
 
 outputText = ""
