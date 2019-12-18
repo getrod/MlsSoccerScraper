@@ -6,5 +6,6 @@ pip install bs4
 pip install lxml  
 pip install requests  
 
-Run python mls.py 1 to query the list of players who's birthdays are in January.
+Run the following command to query the list of players who's birthdays are in January:  
+python mls.py 1  
 The command will store the data in a text file called January_MLS.txt 
